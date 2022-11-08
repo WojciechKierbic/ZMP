@@ -1,6 +1,12 @@
-#ifndef MOBILEOBJ_HH
-#define MOBILEOBJ_HH
+#ifndef SCENE_HH
+#define SCENE_HH
+
+#include <iostream>
+
+#include <map>
+#include <memory>
 #include "MobileObj.hh"
+
 using namespace std;
 
 class Scene
@@ -8,12 +14,13 @@ class Scene
 
 private:
 
-std::map<string,std::share_ptr<MobileObj>> _Set_MobileObjs();
+std::map<string,std::shared_ptr<MobileObj>> MobileObjs;
 
 public:
 
-std::shared_ptr<MobileObj> FindMobileObj(const char * sObjName);
-std::shared_ptr<MobileObj> FindMobileObj( std::string &rObjName);
-void AddMobileObj (MobileObj *pMobObj);
-
+std::shared_ptr<MobileObj> FindMobileObj(const std::string &ObjName);
+void AddMobileObj (const std::string &objName);
+Scene(){};
+~Scene(){};
+};
 #endif

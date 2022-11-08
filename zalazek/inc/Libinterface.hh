@@ -4,9 +4,19 @@
 #include "Interp4Command.hh"
 #include "MobileObj.hh"
 #include "Vector3D.hh"
-#include <string>
+#include <cstring>
+#include <sstream>
+#include <dlfcn.h>
+#include <memory>
+#include <map>
 
 using namespace std;
+
+/*
+* \file
+* \brief Interfejs klasy Libinterface
+*
+*/
 
 class Libinterface 
 {
@@ -16,9 +26,10 @@ class Libinterface
     std::string CmdName;
 
     public:
-    Libinterface(std::string name);
+    Libinterface();
     ~Libinterface();
-    
-} 
+    bool init(std::string &name);
+    bool execActions(std::istream &rIstrm, std::shared_ptr<MobileObj> &mobileObj);
+};
 
 #endif

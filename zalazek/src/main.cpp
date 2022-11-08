@@ -5,6 +5,8 @@
 #include <cstdio>
 #include "Interp4Command.hh"
 #include "Set4Libinterfaces.hh"
+#include "../inc/Scene.hh"
+
 //#include "MobileObj.hh"
 
 #define LINE_SIZE 500
@@ -27,69 +29,6 @@ bool ExecPreprocesor(const char * NazwaPliku, istringstream &IStrm4Cmds)
   return pclose(pProc) == 0;
 }
 
-bool ExecActions(istream &rIStream, Interp4Command &rInterp)
-{
-  string CmdKey;
-  rIStream >> CmdKey;
-  
-  if(CmdKey == "Move")
-  {
-    if(!rInterp.ReadParams(rIStream))
-    {
-      cout<<"Nie udalo sie odczytac parametrow"<<endl;
-      return 1;
-    }
-    else
-    {
-      rInterp.ExecCmd();
-      return true;
-    }
-  }
-
-  else if(CmdKey == "Pause")
-  {
-    if(!rInterp.ReadParams(rIStream))
-    {
-      cout<<"Nie udalo sie odczytac parametrow"<<endl;
-      return 1;
-    }
-    else
-    {
-      rInterp.ExecCmd();
-      return true;
-    }
-  }
-
-  else if(CmdKey == "Rotate")
-  {
-    if(!rInterp.ReadParams(rIStream))
-    {
-      cout<<"Nie udalo sie odczytac parametrow"<<endl;
-      return 1;
-    }
-    else
-    {
-      rInterp.ExecCmd();
-      return true;
-    }
-  }
-
-  else if(CmdKey == "Set")
-  {
-    if(!rInterp.ReadParams(rIStream))
-    {
-      cout<<"Nie udalo sie odczytac parametrow"<<endl;
-      return 1;
-    }
-    else
-    {
-      rInterp.ExecCmd();
-      return true;
-    }
-  }
-  return false;
-}
-
 int main(int argc, char **argv)
 {
   if (argc < 2)
@@ -99,22 +38,17 @@ int main(int argc, char **argv)
   }
 
 istringstream istrm4cmnds;
-
-if(!ExecPreprocesor(argv[1], istrm4cmnds))
-{
-  cout<<"ExecpProc not OK"<<endl;
-  return 2;
-}
-
 Set4Libinterfaces Libinterfaces;
+Scene scene;
+
+std::cout<<istrm4cmnds.str()<<std::endl;
+
+//while (istrm4cmnds.eof())
+//{
+  
+//}
 
 
-while(!istrm4cmnds.eof())
-  if(!ExecActions(istrm4cmnds, Libinterfaces["Move"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Pause"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Rotate"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Set"].pCreateCmd))
-  {
-    cerr<<"ExecACtions not OK"<<endl;
-    return 2;
-  }
   /*
   
 

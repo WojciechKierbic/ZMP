@@ -22,8 +22,9 @@
  */
 class Interp4Move: public Interp4Command {
  
+  std::string _ObjName;
   double  _Speed_mmS = 0;
-  double  _distance = 0;
+  double  _distance_m = 0;
 
  public:
   /*!

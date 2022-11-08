@@ -1,17 +1,21 @@
 #include "Scene.hh"
 
-std::map<string,std::share_ptr<MobileObj>> Scene::_Set_MobileObjs()
-{
 
+std::shared_ptr<MobileObj> Scene::FindMobileObj(const std::string &ObjName)
+{
+    std::map<std::string, std::shared_ptr<MobileObj>>::iterator it = MobileObjs.find(ObjName);
+    if (it == MobileObjs.end()) return nullptr;
+    return it->second;
 }
 
 
-std::shared_ptr<MobileObj> Scene::FindMobileObj(const char * sObjName)
+
+void Scene::AddMobileObj(const std::string &objName)
 {
-
-}
-
-std::shared_ptr<MobileObj> Scene::FindMobileObj( std::string &rObjName)
-{
-
+    if(FindMobileObj(objName))
+    {
+        class std::shared_ptr<MobileObj> mobileObj = std::make_shared<MobileObj>();
+        mobileObj->SetName(objName);
+        MobileObjs.insert({objName, mobileObj});
+    }
 }

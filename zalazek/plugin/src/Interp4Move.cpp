@@ -29,7 +29,9 @@ Interp4Command* CreateCmd(void)
  *
  */
 Interp4Move::Interp4Move()
-{}
+{
+  std::cout<<"Creating MOVE"<<std::endl;
+}
 
 
 /*!
@@ -37,7 +39,7 @@ Interp4Move::Interp4Move()
  */
 void Interp4Move::PrintCmd() const
 {
-  cout << GetCmdName() << " " << _Speed_mmS  <<" "<< _distance << endl;
+  cout << GetCmdName() << " " << _ObjName << " " << _Speed_mmS  <<" "<< _distance_m << endl;
 }
 
 
@@ -65,7 +67,7 @@ bool Interp4Move::ExecCmd(/*MobileObj *pMobObj, int Socket*/) const
  */
 bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
 {
-  Strm_CmdsList >> _Speed_mmS >> _distance;
+  Strm_CmdsList >> _ObjName >> _Speed_mmS >> _distance_m;
   return !Strm_CmdsList.fail();
 }
 

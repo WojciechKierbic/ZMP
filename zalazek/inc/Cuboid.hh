@@ -1,8 +1,8 @@
 #ifndef CUBOID_HH
 #define CUBOID_HH
+#include "MobileObj.hh"
 
-
-class MobileObj: public MobileObj
+class Cuboid: public MobileObj
 {
 
 };

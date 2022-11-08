@@ -1,20 +1,18 @@
 #include "Set4Libinterfaces.hh"
 
-Set4Libinterfaces::Set4Libinterfaces()
+bool Set4Libinterfaces::Add_Interface(string &Interface_Name)
 {
-    Libinterface MoveInterface = Libinterface("libInterp4Move.so");
-    Libinterface PauseInterface = Libinterface("libInterp4Pause.so");
-    Libinterface RotateInterface = Libinterface("libInterp4Rotate.so");
-    Libinterface SetInterface = Libinterface("libInterp4Set.so");
-    Libinterfaces.insert("Move", MoveInterface);
-    Libinterfaces.insert("Pause", PauseInterface);
-    Libinterfaces.insert("Rotate", RotateInterface);
-    Libinterfaces.insert("Set", SetInterface);
-}
-Set4Libinterfaces::~Set4Libinterfaces()
-{
-    for (auto it = Libinterfaces.begin(); it != Libinterfaces.end(); it++)
+    shared_ptr<Libinterface> lib_if = make_shared<Libinterface>();
+    if (!lib_if->init(Interface_Name))
     {
-        it = Libinterfaces.erease(it);
+        return false;
     }
+    Libinterfaces.insert({Interface_Name, lib_if});
+    return true;
+}
+std::shared_ptr<Libinterface> Set4Libinterfaces::Find_Interface(string& name)
+{
+    auto it = Libinterfaces.find("../libs/libInterp4" + name + ".so");
+    if(it == Libinterfaces.end()) return nullptr;
+    return it->second;
 }
