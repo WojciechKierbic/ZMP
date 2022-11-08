@@ -10,12 +10,12 @@ using namespace std;
 
 class Libinterface 
 {
-    public:
+    private:
     void * LibHandler;
-    void * pFun;
     Interp4Command *(*pCreateCmd)(void);
     std::string CmdName;
-    
+
+    public:
     Libinterface(std::string name);
     ~Libinterface();
     

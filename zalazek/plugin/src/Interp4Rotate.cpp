@@ -53,11 +53,9 @@ const char* Interp4Rotate::GetCmdName() const
 /*!
  *
  */
-bool Interp4Rotate::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Rotate::ExecCmd( /*MobileObj *pMobObj, int Socket*/) const
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  this->PrintCmd();
   return true;
 }
 
@@ -67,8 +65,7 @@ bool Interp4Rotate::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
-  std::string tmp;
-  Strm_CmdsList >> tmp >> Rot_angle_deg;
+  Strm_CmdsList >> Rot_angle_deg;
   return !Strm_CmdsList.fail();
 }
 

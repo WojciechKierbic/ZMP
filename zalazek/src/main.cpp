@@ -4,6 +4,7 @@
 #include <sstream>
 #include <cstdio>
 #include "Interp4Command.hh"
+#include "Set4Libinterfaces.hh"
 //#include "MobileObj.hh"
 
 #define LINE_SIZE 500
@@ -30,20 +31,63 @@ bool ExecActions(istream &rIStream, Interp4Command &rInterp)
 {
   string CmdKey;
   rIStream >> CmdKey;
+  
   if(CmdKey == "Move")
   {
     if(!rInterp.ReadParams(rIStream))
     {
       cout<<"Nie udalo sie odczytac parametrow"<<endl;
-      return 4;
+      return 1;
     }
     else
     {
-      rInterp.PrintCmd();
+      rInterp.ExecCmd();
+      return true;
     }
   }
-  cout<< " Polecenie: "<<CmdKey<<endl;
-  return true;
+
+  else if(CmdKey == "Pause")
+  {
+    if(!rInterp.ReadParams(rIStream))
+    {
+      cout<<"Nie udalo sie odczytac parametrow"<<endl;
+      return 1;
+    }
+    else
+    {
+      rInterp.ExecCmd();
+      return true;
+    }
+  }
+
+  else if(CmdKey == "Rotate")
+  {
+    if(!rInterp.ReadParams(rIStream))
+    {
+      cout<<"Nie udalo sie odczytac parametrow"<<endl;
+      return 1;
+    }
+    else
+    {
+      rInterp.ExecCmd();
+      return true;
+    }
+  }
+
+  else if(CmdKey == "Set")
+  {
+    if(!rInterp.ReadParams(rIStream))
+    {
+      cout<<"Nie udalo sie odczytac parametrow"<<endl;
+      return 1;
+    }
+    else
+    {
+      rInterp.ExecCmd();
+      return true;
+    }
+  }
+  return false;
 }
 
 int main(int argc, char **argv)
@@ -53,40 +97,23 @@ int main(int argc, char **argv)
     cout<<"Za mało parametrów w linii wywołania"<<endl;
     return 1;
   }
+
 istringstream istrm4cmnds;
+
 if(!ExecPreprocesor(argv[1], istrm4cmnds))
 {
   cout<<"ExecpProc not OK"<<endl;
   return 2;
 }
 
-void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
-  Interp4Command *(*pCreateCmd_Move)(void);
-  void *pFun;
-
-  if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
-    return 1;
-  }
+Set4Libinterfaces Libinterfaces;
 
 
-  pFun = dlsym(pLibHnd_Move,"CreateCmd");
-  if (!pFun) {
-    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-    return 1;
-  }
-  pCreateCmd_Move = *reinterpret_cast<Interp4Command* (**)(void)>(&pFun);
-
-
-  Interp4Command *pCmd = pCreateCmd_Move();
-
-
-  //cout<<endl<<istrm4cmnds.str()<<endl;
-
-  if(!ExecActions(istrm4cmnds, *pCmd))
+while(!istrm4cmnds.eof())
+  if(!ExecActions(istrm4cmnds, Libinterfaces["Move"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Pause"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Rotate"].pCreateCmd) || !ExecActions(istrm4cmnds, Libinterfaces["Set"].pCreateCmd))
   {
     cerr<<"ExecACtions not OK"<<endl;
-    return 3;
+    return 2;
   }
   /*
   

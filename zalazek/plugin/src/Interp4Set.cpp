@@ -53,11 +53,9 @@ const char* Interp4Set::GetCmdName() const
 /*!
  *
  */
-bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Set::ExecCmd(/*MobileObj *pMobObj, int Socket*/) const
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  this->PrintCmd();
   return true;
 }
 
@@ -67,8 +65,7 @@ bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  std::string tmp;
-  Strm_CmdsList >> tmp >> X_Coord >> Y_Coord >> Z_Coord;
+  Strm_CmdsList >> X_Coord >> Y_Coord >> Z_Coord;
   return !Strm_CmdsList.fail();
 }
 

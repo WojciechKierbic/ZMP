@@ -53,11 +53,9 @@ const char* Interp4Pause::GetCmdName() const
 /*!
  *
  */
-bool Interp4Pause::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Pause::ExecCmd(/*MobileObj *pMobObj, int Socket*/) const
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  this->PrintCmd();
   return true;
 }
 
@@ -67,8 +65,7 @@ bool Interp4Pause::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList)
 {
-  std::string tmp;
-  Strm_CmdsList >> tmp >> Pause_time_ms;
+  Strm_CmdsList >> Pause_time_ms;
   return !Strm_CmdsList.fail();
 }
 
