@@ -7,7 +7,7 @@
 #endif
 #include <string>
 #include "Interp4Command.hh"
-
+#include "AccessControl.hh"
 /*!
  * \file
  * \brief Definicja klasy Interp4Move
@@ -46,7 +46,7 @@ class Interp4Move: public Interp4Command {
   /*!
    * \brief Wykonuje polecenie oraz wizualizuje jego realizację
    */
-  virtual bool ExecCmd( /*MobileObj *pMobObj, int Socket*/) const;
+  virtual bool ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const;
   /*!
    * \brief Czyta wartości parametrów danego polecenia
    */

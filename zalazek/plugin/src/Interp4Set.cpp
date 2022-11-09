@@ -53,7 +53,7 @@ const char* Interp4Set::GetCmdName() const
 /*!
  *
  */
-bool Interp4Set::ExecCmd(/*MobileObj *pMobObj, int Socket*/) const
+bool Interp4Set::ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const
 {
   this->PrintCmd();
   return true;
