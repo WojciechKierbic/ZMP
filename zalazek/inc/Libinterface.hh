@@ -1,5 +1,6 @@
 #ifndef LIBINTERFACE_HH
 #define LIBINTERFACE_HH
+
 #include "geomVector.hh"
 #include "Interp4Command.hh"
 #include "MobileObj.hh"
@@ -28,8 +29,9 @@ class Libinterface
     public:
     Libinterface();
     ~Libinterface();
-    bool init(std::string &name);
-    bool execActions(std::istream &rIstrm, std::shared_ptr<MobileObj> &mobileObj);
+    bool init(const std::string name);
+    Interp4Command *CreateCmd();
+    //bool execActions(std::istream &rIstrm, std::shared_ptr<MobileObj> &mobileObj);
 };
 
 #endif

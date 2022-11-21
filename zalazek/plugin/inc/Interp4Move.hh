@@ -7,7 +7,7 @@
 #endif
 #include <string>
 #include "Interp4Command.hh"
-#include "AccessControl.hh"
+
 /*!
  * \file
  * \brief Definicja klasy Interp4Move

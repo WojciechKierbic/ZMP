@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Interp4Move.hh"
-#include "MobileObj.hh"
+
 
 using std::cout;
 using std::endl;

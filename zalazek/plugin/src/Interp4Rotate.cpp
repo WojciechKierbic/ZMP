@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Interp4Rotate.hh"
-#include "MobileObj.hh"
+
 
 using std::cout;
 using std::endl;
@@ -37,7 +37,7 @@ Interp4Rotate::Interp4Rotate()
  */
 void Interp4Rotate::PrintCmd() const
 {
-  cout << GetCmdName() << " " << Rot_angle_deg << endl;
+  cout << GetCmdName() << " " << _ObjName<< " " << Rot_angle_deg << endl;
 }
 
 
@@ -65,7 +65,7 @@ bool Interp4Rotate::ExecCmd( MobileObj *pMobObj, AccessControl *pAccCtrl) const
  */
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
-  Strm_CmdsList >> Rot_angle_deg;
+  Strm_CmdsList >> _ObjName >> Rot_angle_deg;
   return !Strm_CmdsList.fail();
 }
 

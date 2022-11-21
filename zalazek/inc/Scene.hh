@@ -2,12 +2,12 @@
 #define SCENE_HH
 
 #include <iostream>
-
 #include <map>
 #include <memory>
 #include "MobileObj.hh"
 #include "AccessControl.hh"
 #include "Vector3D.hh"
+#include "Configuration.hh"
 #include <vector>
 #include <sstream>
 
@@ -18,16 +18,12 @@ class Scene : public AccessControl
 
 private:
 
-std::map<string,std::shared_ptr<MobileObj>> MobileObjs;
+std::map <string, MobileObj> MobileObjs;
 
 public:
-
-std::shared_ptr<MobileObj> FindMobileObj(const std::string &ObjName);
-void AddMobileObj (const std::string &objName);
-// void AddObjectColor (const std::string &objName, std::string RGB_Value);
-// void AddObjectPos (const std::string &objName, std::string Pos_Value);
-// void AddObjectSize (const std::string &objName, std::string Size_Value);
-Scene(){};
-~Scene(){};
+Scene(Configuration &config);
+MobileObj* FindMobileObj(const char* ObjName);
+bool AddMobileObj (MobileObj *pObj);
+std::map<string, MobileObj> getMObjects();
 };
 #endif

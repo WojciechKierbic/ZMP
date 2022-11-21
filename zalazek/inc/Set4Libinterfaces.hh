@@ -1,11 +1,14 @@
 #ifndef SET4LIBINTERFACES_HH
 #define SET4LIBINTERFACES_HH
 
+#include "Interp4Command.hh"
 #include "Libinterface.hh"
 #include <map>
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -21,8 +24,8 @@ public:
 Set4Libinterfaces(){};
 ~Set4Libinterfaces(){};
 
-bool Add_Interface(string &Interface_Name);
-std::shared_ptr<Libinterface> Find_Interface(string& name);
+bool init(std::vector<std::string> lib_vector);
+bool execLib(std::istringstream &strm);
 
 };
 

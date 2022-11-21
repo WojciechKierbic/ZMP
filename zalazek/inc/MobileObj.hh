@@ -65,6 +65,9 @@
         * musi to być nazwa unikalna wśród wszystkich obiektów na scenie.
         */
        std::string  _Name;
+       Vector3D scale;
+       Vector3D translation;
+       Vector3D color;
 
      public:
       /*!
@@ -141,13 +144,16 @@
        *  Zmienia nazwę obiektu.
        *  \param[in] sName - nowa nazwa obiektu.
        */
-       void SetName(const char* sName) { _Name = sName; }
+       void SetName(const std::string sName) { _Name = sName; }
        /*!
         * \brief Udostępnia nazwę obiektu.
 	*
 	* Udostępnia nazwę obiektu w trybie tylko do odczytu.
         */
        const std::string & GetName() const { return _Name; }
+       void setScale(Vector3D new_scale){scale = new_scale;}
+       void setColor(Vector3D new_color){color = new_color;}
+       void setTranslation(Vector3D new_translation){translation = new_translation;}
     };
 
 

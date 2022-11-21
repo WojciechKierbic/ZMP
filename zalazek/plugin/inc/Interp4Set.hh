@@ -25,7 +25,7 @@ class Interp4Set: public Interp4Command {
   double  X_Coord = 0;
   double  Y_Coord = 0;
   double  Z_Coord = 0;
-
+  std::string _ObjName;
  public:
   /*!
    * \brief

@@ -23,7 +23,7 @@
 class Interp4Rotate: public Interp4Command {
   
   double  Rot_angle_deg = 0;
-    
+  std::string _ObjName; 
  public:
   /*!
    * \brief Konstruktor

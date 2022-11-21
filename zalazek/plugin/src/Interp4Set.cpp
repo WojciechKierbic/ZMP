@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Interp4Set.hh"
-#include "MobileObj.hh"
 
 using std::cout;
 using std::endl;
@@ -37,7 +36,7 @@ Interp4Set::Interp4Set()
  */
 void Interp4Set::PrintCmd() const
 {
-  cout << GetCmdName() << " " <<  X_Coord  <<" "<< Y_Coord << " " << Z_Coord << endl;
+  cout << GetCmdName() << " " << _ObjName << " " <<  X_Coord  <<" "<< Y_Coord << " " << Z_Coord << endl;
 }
 
 
@@ -65,7 +64,7 @@ bool Interp4Set::ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  Strm_CmdsList >> X_Coord >> Y_Coord >> Z_Coord;
+  Strm_CmdsList >> _ObjName  >> X_Coord >> Y_Coord >> Z_Coord;
   return !Strm_CmdsList.fail();
 }
 

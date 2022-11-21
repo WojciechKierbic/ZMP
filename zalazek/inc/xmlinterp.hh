@@ -2,6 +2,8 @@
 #define XMLINTERP4ACTIONS_HH
 
 #include <string>
+#include "Configuration.hh"
+#include "Vector3D.hh"
 #include <xercesc/util/XMLString.hpp>
 //#include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
@@ -12,8 +14,6 @@
 
 //XERCES_CPP_NAMESPACE_USE
 
-#include "Configuration.hh"
-
 
 /*!
  * \brief Implementuje reakcje na napotkane elementu opisu akcji
@@ -21,12 +21,16 @@
  * Klasa zawiera zestaw metod, które wywoływane są w trakcie czytania i analizy
  * pliku XML.
  */
-class XMLInterp4Config : public xercesc::DefaultHandler {
+class XMLInterp4Config : public xercesc::DefaultHandler 
+  {
+  private:
+  Configuration &config;
+
   public:
    /*!
     * \brief Inicjalizuje obiekt i kojarzy go z listą poleceń robota
     */
-  XMLInterp4Config(Configuration &rConfig);
+  XMLInterp4Config(Configuration &rConfig) : config(rConfig){};
 
    /*!
     * \brief Wywoływana jest na początku dokumentu

@@ -22,11 +22,32 @@ LDFLAGS=-Wall
 
 
 
-interp: obj/main.o
-	g++ ${LDFLAGS} -o interp  obj/main.o -ldl
+interp: obj/main.o obj/Set4Libinterfaces.o obj/Scene.o obj/Libinterface.o obj/Configuration.o obj/Reader.o obj/Sender.o obj/xmlinterp.o
+	g++ ${LDFLAGS} -o interp  obj/main.o obj/Set4Libinterfaces.o obj/Scene.o obj/Libinterface.o obj/Configuration.o obj/Reader.o obj/Sender.o obj/xmlinterp.o -ldl
 
-obj/main.o: src/main.cpp inc/Interp4Command.hh
+obj/main.o: src/main.cpp inc/Interp4Command.hh 
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
+
+obj/Set4Libinterfaces.o: src/Set4Libinterfaces.cpp inc/Set4Libinterfaces.hh  inc/Libinterface.hh 
+	g++ -c ${CPPFLAGS} -o obj/Set4Libinterfaces.o src/Set4Libinterfaces.cpp
+
+obj/Scene.o: src/main.cpp inc/Scene.hh inc/MobileObj.hh inc/AccessControl.hh inc/Vector3D.hh
+	g++ -c ${CPPFLAGS} -o obj/Scene.o src/Scene.cpp
+
+obj/Libinterface.o: src/Libinterface.cpp inc/Libinterface.hh inc/Interp4Command.hh
+	g++ -c ${CPPFLAGS} -o obj/Libinterface.o src/Libinterface.cpp
+
+obj/Configuration.o: src/Configuration.cpp inc/Configuration.hh inc/Vector3D.hh
+	g++ -c ${CPPFLAGS} -o obj/Configuration.o src/Configuration.cpp
+
+obj/Reader.o: src/Reader.cpp inc/Reader.hh inc/xmlinterp.hh inc/Configuration.hh 
+	g++ -c ${CPPFLAGS} -o obj/Reader.o src/Reader.cpp 
+
+obj/Sender.o: src/Sender.cpp inc/Sender.hh inc/Scene.hh inc/Port.hh 
+	g++ -c ${CPPFLAGS} -o obj/Sender.o src/Sender.cpp	
+
+obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh inc/Configuration.hh 
+	g++ -c ${CPPFLAGS} -o obj/xmlinterp.o src/xmlinterp.cpp	
 
 clean:
 	rm -f obj/* interp core*
