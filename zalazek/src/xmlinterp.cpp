@@ -1,5 +1,5 @@
 #include <xercesc/util/PlatformUtils.hpp>
-#include "../inc/xmlinterp.hh"
+#include "xmlinterp.hh"
 #include <cassert>
 #include <sstream>
 #include <cstdlib>
@@ -66,7 +66,7 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
  cout << "  Nazwa biblioteki: " << sLibName << endl;
 
  // Tu trzeba wpisać własny kod ...
-this->config.add_lib(sLibName);
+this->config.lib_vector.push_back(sLibName);
 
  xercesc::XMLString::release(&sParamName);
  xercesc::XMLString::release(&sLibName);
@@ -81,7 +81,8 @@ this->config.add_lib(sLibName);
 void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
 {
  std::vector<std::vector<std::string>> sValue(6, std::vector<std::string>(2,""));
- if (rAttrs.getLength() < 1) {
+ int number_of_attributes = rAttrs.getLength();
+ if (number_of_attributes < 1) {
       cerr << "Zla ilosc atrybutow dla \"Cube\"" << endl;
       exit(1);
  }
@@ -90,35 +91,38 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
   *  Tutaj pobierane sa nazwy pierwszego i drugiego atrybuty.
   *  Sprawdzamy, czy na pewno jest to Name i Value.
   */
-for (int i = 0; i < rAttrs.getLength(); i++)
+for (int i = 0; i < number_of_attributes; i++)
 {
   std::string attribute = xercesc::XMLString::transcode(rAttrs.getQName(i));
-  switch (attribute)
-  {swit
-  case "Name":
+  if (attribute == "Name")
+  {
   sValue[0][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[0][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
-  case "Shift":
+  }
+  else if(attribute == "Shift")
+  {
   sValue[1][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[1][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
-  case "Scale":
+  }
+  else if(attribute == "Scale")
+  {
   sValue[2][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[2][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
-  case "RotXYZ_deg":
+  }
+  else if (attribute == "RotXYZ_deg")
+  {
   sValue[3][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[3][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
-  case "Trans_m":
+  }
+  else if (attribute == "Trans_m")
+  {
   sValue[4][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[4][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
-  case "RGB":
+  }
+  else if (attribute == "RGB")
+  {
   sValue[5][0] = xercesc::XMLString::transcode(rAttrs.getQName(i));
   sValue[5][1] = xercesc::XMLString::transcode(rAttrs.getValue(i));
-  break;
   }
 }
 
@@ -159,40 +163,41 @@ for (int i = 0; i < rAttrs.getLength(); i++)
  //
  istringstream   IStrm;
  Vector3D values;
+ MobileObjStruct obj_conf;
+ obj_conf.name = sValue[0][1];
 
- this->config.add_object_name(sValue[0][1]);
- for (int i = 0; i < 6; i++)
+ for (int i = 1; i < 6; i++)
  {
   IStrm.str(sValue[i][1]);
   IStrm >> values[0] >> values[1] >> values[2];
   if(i == 1)
   {
-    this->config.add_object_position_shift(values);
+    obj_conf.shift = values;
   }
   else if(i == 2)
   {
-    this->config.add_object_scale(values);
+    obj_conf.scale = values;
   }
   else if(i == 3)
   {
-    this->config.add_object_rotation(values);
+    obj_conf.rotation = values;
   }
   else if(i == 4)
   {
-    this->config.add_object_transition(values);
+    obj_conf.translation = values;
   }
   else if(i == 5)
   {
-    this->config.add_object_color(values);
+    obj_conf.color = values;
   }
   std::cout << " Czytanie wartosci OK!!!" << std::endl;
   if(i > 0)
   {
-    std::cout << sValue[i][0] << "  " << sValue[i][1] << "   " << sValue[i][2] << std::endl;
+    std::cout << sValue[i][0] << "   " << values[0] << "   " << values[1] << "   " << values[2] << std::endl;
   }
   IStrm.clear();
  }
- 
+ this->config.obj_vector.push_back(obj_conf);
 //  IStrm.str(sValue_Scale);
 //  double  Sx,Sy,Sz;
 

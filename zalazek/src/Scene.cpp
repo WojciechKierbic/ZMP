@@ -1,4 +1,4 @@
-#include "../inc/Scene.hh"
+#include "Scene.hh"
 
 MobileObj* Scene::FindMobileObj(const char* name)
 {
@@ -7,6 +7,7 @@ MobileObj* Scene::FindMobileObj(const char* name)
     if(it == MobileObjs.end())
     {
         std::cout << "Cannot find object " << name << std::endl;
+        return pObj;
     }
     pObj =  &(it->second);
     return pObj;
@@ -18,35 +19,29 @@ bool Scene::AddMobileObj(MobileObj *pObj)
     if(it == MobileObjs.end())
     {
         this->MobileObjs.insert(std::make_pair(pObj->GetName(), *pObj));
-        return 0;
+        return 1;
     }
         std::cout << "Object "  << pObj->GetName() << " already exists" << std::endl;
-        return 1;
+        return 0;
 }
 
 Scene::Scene(Configuration &config)
 { 
-    std::vector<std::string> object_names = config.getObjects_names();
-    std::vector<Vector3D> scales = config.getObjects_scales();
-    std::vector<Vector3D> color = config.getObjects_colors();
-    std::vector<Vector3D> pos_shift = config.getObjects_position_shift();
-    std::vector<Vector3D> rotation = config.getObjects_rotations();
-    std::vector<Vector3D> translation = config.getObjects_translations();
-    
-    for (unsigned int i = 0; i < object_names.size(); i++)
+
+    for (unsigned int i = 0; i < config.obj_vector.size(); i++)
     {
         MobileObj tmp_mobileObj;
-        tmp_mobileObj.SetName(object_names[i].c_str());
+        tmp_mobileObj.SetName(config.obj_vector[i].name.c_str());
         
-        tmp_mobileObj.SetAng_Roll_deg(rotation[i][0]);
-        tmp_mobileObj.SetAng_Pitch_deg(rotation[i][1]);
-        tmp_mobileObj.SetAng_Yaw_deg(rotation[i][2]);
+        tmp_mobileObj.SetAng_Roll_deg(config.obj_vector[i].rotation[0]);
+        tmp_mobileObj.SetAng_Pitch_deg(config.obj_vector[i].rotation[1]);
+        tmp_mobileObj.SetAng_Yaw_deg(config.obj_vector[i].rotation[2]);
 
-        tmp_mobileObj.SetPosition_m(pos_shift[i]);
-        tmp_mobileObj.setColor(color[i]);
+        tmp_mobileObj.SetPosition_m(config.obj_vector[i].shift);
+        tmp_mobileObj.setColor(config.obj_vector[i].color);
 
-        tmp_mobileObj.setScale(scales[i]);
-        tmp_mobileObj.setTranslation(translation[i]);
+        tmp_mobileObj.setScale(config.obj_vector[i].scale);
+        tmp_mobileObj.setTranslation(config.obj_vector[i].translation);
         
         if(AddMobileObj(&tmp_mobileObj))
         {
@@ -57,4 +52,8 @@ Scene::Scene(Configuration &config)
             std::cerr<<"Adding mobile object ERROR"<<std::endl;
         }
     }  
+}
+std::map<std::string, MobileObj> Scene::getMObjects()
+{
+    return MobileObjs;
 }

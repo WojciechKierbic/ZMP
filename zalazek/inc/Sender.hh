@@ -9,8 +9,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "../inc/Scene.hh"
-#include "../inc/Port.hh"
+#include "Scene.hh"
+#include "Port.hh"
 
 class Sender {
   /*!
@@ -65,14 +65,30 @@ class Sender {
    *                     wysyłane są polecenia.
    */
    void Watching_and_Sending() {
-     while (ShouldCountinueLooping()) {
-       if (!_pScn->IsChanged())  { usleep(10000); continue; }
-       _pScn->LockAccess();
-       
-       //------- Przeglądanie tej kolekcji to uproszczony przykład
-       for(auto const &it : _pScn->getMObjects())
-       {
-        std::cout << it.first << std::endl;
+    Send("Clear\n");
+    _pScn->LockAccess();
+    for(auto &iterator : _pScn->getMObjects())
+    {
+      Send(AddInstr(&(iterator.second)).c_str());  
+    }
+    _pScn->UnlockAccess();
+    while (ShouldCountinueLooping())
+    {
+      if(!_pScn->IsChanged())
+      {
+        usleep(10000);
+        continue;
+      }
+      _pScn->LockAccess();
+
+      for(auto &iterator : _pScn->getMObjects())
+      {
+        Send(UpdateInstr(&(iterator.second)).c_str());
+      }
+      _pScn->CancelChange();
+      _pScn->UnlockAccess();
+    }
+      
        }
     //    for (const GeomObject &rObj : _pScn->_Container4Objects) {
     //                                  // Ta instrukcja to tylko uproszczony przykład
@@ -80,13 +96,10 @@ class Sender {
     //      Send(_Socket,rObj.GetStateDesc()); // Tu musi zostać wywołanie odpowiedniej
     //                                        // metody/funkcji gerującej polecenia dla serwera.
     //    }
-       
-       _pScn->CancelChange();
-       _pScn->UnlockAccess();
-     }
-   }
    bool OpenConnection();
    int Send(const char* sMesg);
+   std::string UpdateInstr(MobileObj *obj) const;
+   std::string AddInstr(MobileObj *obj) const;
   
 };
 #endif

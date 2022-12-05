@@ -1,4 +1,4 @@
-#include "../inc/Reader.hh"
+#include "Reader.hh"
 
 bool Reader::init(std::string CmdFile)
 {
@@ -6,7 +6,7 @@ bool Reader::init(std::string CmdFile)
     return 0;
 }
 
-bool Reader::execPreprocesor(istringstream &IStrm4Cmds)
+bool Reader::execPreprocesor(std::istringstream &IStrm4Cmds)
 {
   std::string Cmd4Preproc = "cpp -P ";
   char Line[LINE_SIZE];
@@ -25,28 +25,28 @@ bool Reader::execPreprocesor(istringstream &IStrm4Cmds)
 bool Reader::ReadFile(const char* sFileName, Configuration &rConfig)
 {
    try {
-            XMLPlatformUtils::Initialize();
+            xercesc::XMLPlatformUtils::Initialize();
    }
-   catch (const XMLException& toCatch) {
-            char* message = XMLString::transcode(toCatch.getMessage());
-            cerr << "Error during initialization! :\n";
-            cerr << "Exception message is: \n"
+   catch (const xercesc::XMLException& toCatch) {
+            char* message = xercesc::XMLString::transcode(toCatch.getMessage());
+            std::cerr << "Error during initialization! :\n";
+            std::cerr << "Exception message is: \n"
                  << message << "\n";
-            XMLString::release(&message);
+            xercesc::XMLString::release(&message);
             return 1;
    }
 
-   SAX2XMLReader* pParser = XMLReaderFactory::createXMLReader();
+   xercesc::SAX2XMLReader* pParser = xercesc::XMLReaderFactory::createXMLReader();
 
-   pParser->setFeature(XMLUni::fgSAX2CoreNameSpaces, true);
-   pParser->setFeature(XMLUni::fgSAX2CoreValidation, true);
-   pParser->setFeature(XMLUni::fgXercesDynamic, false);
-   pParser->setFeature(XMLUni::fgXercesSchema, true);
-   pParser->setFeature(XMLUni::fgXercesSchemaFullChecking, true);
+   pParser->setFeature(xercesc::XMLUni::fgSAX2CoreNameSpaces, true);
+   pParser->setFeature(xercesc::XMLUni::fgSAX2CoreValidation, true);
+   pParser->setFeature(xercesc::XMLUni::fgXercesDynamic, false);
+   pParser->setFeature(xercesc::XMLUni::fgXercesSchema, true);
+   pParser->setFeature(xercesc::XMLUni::fgXercesSchemaFullChecking, true);
 
-   pParser->setFeature(XMLUni::fgXercesValidationErrorAsFatal, true);
+   pParser->setFeature(xercesc::XMLUni::fgXercesValidationErrorAsFatal, true);
 
-   DefaultHandler* pHandler = new XMLInterp4Config(rConfig);
+   xercesc::DefaultHandler* pHandler = new XMLInterp4Config(rConfig);
    pParser->setContentHandler(pHandler);
    pParser->setErrorHandler(pHandler);
 
@@ -59,18 +59,18 @@ bool Reader::ReadFile(const char* sFileName, Configuration &rConfig)
             << endl;
        return false;
      }
-     pParser->setFeature(XMLUni::fgXercesUseCachedGrammarInParse,true);
+     pParser->setFeature(xercesc::XMLUni::fgXercesUseCachedGrammarInParse,true);
      pParser->parse(sFileName);
    }
-   catch (const XMLException& Exception) {
-            char* sMessage = XMLString::transcode(Exception.getMessage());
+   catch (const xercesc::XMLException& Exception) {
+            char* sMessage = xercesc::XMLString::transcode(Exception.getMessage());
             cerr << "Informacja o wyjatku: \n"
                  << "   " << sMessage << "\n";
-            XMLString::release(&sMessage);
+            xercesc::XMLString::release(&sMessage);
             return false;
    }
-   catch (const SAXParseException& Exception) {
-            char* sMessage = XMLString::transcode(Exception.getMessage());
+   catch (const xercesc::SAXParseException& Exception) {
+            char* sMessage = xercesc::XMLString::transcode(Exception.getMessage());
             char* sSystemId = xercesc::XMLString::transcode(Exception.getSystemId());
 
             cerr << "Blad! " << endl
@@ -80,8 +80,8 @@ bool Reader::ReadFile(const char* sFileName, Configuration &rConfig)
                  << " Informacja: " << sMessage 
                  << endl;
 
-            XMLString::release(&sMessage);
-            XMLString::release(&sSystemId);
+            xercesc::XMLString::release(&sMessage);
+            xercesc::XMLString::release(&sSystemId);
             return false;
    }
    catch (...) {

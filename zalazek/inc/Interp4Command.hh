@@ -2,8 +2,11 @@
 #define  INTERP4COMMAND_HH
 
 #include <iostream>
-#include "MobileObj.hh"
 #include "AccessControl.hh"
+#include "Scene.hh"
+#include "MobileObj.hh"
+#include <unistd.h>
+
 /*!
  * \file
  * \brief Definicja klasy Interp4Command
@@ -39,7 +42,7 @@
    /*!
     * \brief Wykonuje polecenie oraz wizualizuje jego realizację.
     */
-   virtual bool ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const = 0;
+   virtual bool ExecCmd(Scene *wScn) const = 0;
    /*!
     * \brief Czyta wartości parametrów danego polecenia.
     */

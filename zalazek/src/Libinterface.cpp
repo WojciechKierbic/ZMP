@@ -1,9 +1,4 @@
-#include "../inc/Libinterface.hh"
-
-Libinterface::Libinterface()
-{
-  
-}
+#include "Libinterface.hh"
 
 Libinterface::~Libinterface()
 {
@@ -13,21 +8,21 @@ Libinterface::~Libinterface()
 bool Libinterface::init(const std::string name)
 {
   LibHandler = dlopen(name.c_str(), RTLD_LAZY);
-
+  void *pFun;
   const char* (*CmdNameFcn)(void);
 
   
   if (!LibHandler)
   {
-    cerr << "!!! Brak biblioteki: " << name << endl;
+    std::cerr << "!!! Brak biblioteki: " << name << endl;
     return 1;
   }
 
-  void *pFun = dlsym(LibHandler, "CreateCmd");
+  pFun = dlsym(LibHandler, "CreateCmd");
 
   if (!pFun)
   {
-    std::cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
+    std::cerr << "!!! Nie znaleziono funkcji CreateCmd w " << name << endl;
     return 1;
   }
 

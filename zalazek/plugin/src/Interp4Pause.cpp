@@ -53,9 +53,11 @@ const char* Interp4Pause::GetCmdName() const
 /*!
  *
  */
-bool Interp4Pause::ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const
+bool Interp4Pause::ExecCmd(Scene *wScn) const
 {
-  this->PrintCmd();
+  wScn->LockAccess();
+  usleep(this->Pause_time_ms * 1000); // w sekundach
+  wScn->UnlockAccess();
   return true;
 }
 

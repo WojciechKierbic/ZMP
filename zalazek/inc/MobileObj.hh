@@ -154,6 +154,11 @@
        void setScale(Vector3D new_scale){scale = new_scale;}
        void setColor(Vector3D new_color){color = new_color;}
        void setTranslation(Vector3D new_translation){translation = new_translation;}
+       std::string UpdInstr() const;
+       std::string AddInstr() const;
+       Vector3D getScale() {return scale;}
+       Vector3D getColor() {return color;}
+       Vector3D getTranslation() {return translation;}
     };
 
 

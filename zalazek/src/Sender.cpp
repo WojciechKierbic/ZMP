@@ -1,4 +1,4 @@
-#include "../inc/Sender.hh"
+#include "Sender.hh"
 
 Sender::~Sender()
 {
@@ -47,7 +47,30 @@ int Sender::Send(const char* sMesg)
     }
     return 0;
 }
+std::string Sender::AddInstr(MobileObj *obj) const
+{
+  std::string instr = "AddObj";
+  instr += " Name=" + obj->GetName();
+  instr += " Shift=(" + std::to_string(obj->GetPositoin_m()[0]) + ", " + std::to_string(obj->GetPositoin_m()[1]) + ", " + std::to_string(obj->GetPositoin_m()[2]) + ")";
+  instr += " Scale=(" + std::to_string(obj->getScale()[0]) + ", " + std::to_string(obj->getScale()[1]) + ", " + std::to_string(obj->getScale()[2]) + ")";
+  instr += " Trans_m=(" + std::to_string(obj->getTranslation()[0]) + ", " + std::to_string(obj->getTranslation()[1]) + ", " + std::to_string(obj->getTranslation()[2]) + ")";
+  instr += " RGB=(" + std::to_string((int)obj->getColor()[0]) + ", " + std::to_string((int)obj->getColor()[1]) + ", " + std::to_string((int)obj->getColor()[2]) + ")";
+  instr += " RotXYZ_deg=(" + std::to_string(obj->GetAng_Roll_deg()) + ", " + std::to_string(obj->GetAng_Pitch_deg()) + ", " + std::to_string(obj->GetAng_Yaw_deg()) + ")\n";
+  std::cout << instr;
+  return instr;
+}
 
-
+std::string Sender::UpdateInstr(MobileObj *obj) const
+{
+  std::string instr = "UpdateObj";
+  instr += " Name=" + obj->GetName();
+  instr += " Shift=(" + std::to_string(obj->GetPositoin_m()[0]) + ", " + std::to_string(obj->GetPositoin_m()[1]) + ", " + std::to_string(obj->GetPositoin_m()[2]) + ")";
+  instr += " Scale=(" + std::to_string(obj->getScale()[0]) + ", " + std::to_string(obj->getScale()[1]) + ", " + std::to_string(obj->getScale()[2]) + ")";
+  instr += " Trans_m=(" + std::to_string(obj->getTranslation()[0]) + ", " + std::to_string(obj->getTranslation()[1]) + ", " + std::to_string(obj->getTranslation()[2]) + ")";
+  instr += " RGB=(" + std::to_string((int)obj->getColor()[0]) + ", " + std::to_string((int)obj->getColor()[1]) + ", " + std::to_string((int)obj->getColor()[2]) + ")";
+  instr += " RotXYZ_deg=(" + std::to_string(obj->GetAng_Roll_deg()) + ", " + std::to_string(obj->GetAng_Pitch_deg()) + ", " + std::to_string(obj->GetAng_Yaw_deg()) + ")\n";
+  
+  return instr;
+}
 
 

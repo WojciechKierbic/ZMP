@@ -27,7 +27,6 @@ class Libinterface
     std::string CmdName;
 
     public:
-    Libinterface();
     ~Libinterface();
     bool init(const std::string name);
     Interp4Command *CreateCmd();

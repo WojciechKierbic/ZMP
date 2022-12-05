@@ -6,13 +6,13 @@
 #include <memory>
 #include <thread>
 #include "Interp4Command.hh"
-#include "../inc/Set4Libinterfaces.hh"
-#include "../inc/Scene.hh"
-#include "../inc/MobileObj.hh"
-#include "../inc/Configuration.hh"
-#include "../inc/Reader.hh"
-#include "../inc/Sender.hh"
-#include "../inc/xmlinterp.hh"
+#include "Set4Libinterfaces.hh"
+#include "Scene.hh"
+#include "MobileObj.hh"
+#include "Configuration.hh"
+#include "Reader.hh"
+#include "Sender.hh"
+#include "xmlinterp.hh"
 
 #define LINE_SIZE 500
 
@@ -24,49 +24,73 @@ int main(int argc, char **argv)
 {
   if (argc < 2)
   {
-    cout<<"Za mało parametrów w linii wywołania"<<endl;
+    std::cerr<<"No command file" << std::endl;
+    return 1;
+  }
+  if (argc < 3)
+  {
+    std::cerr<<"No XML file" << std::endl;
     return 1;
   }
   Configuration config;
   Reader reader;
+  Set4Libinterfaces libinterfaces;
   std::istringstream IStrm4Cmnds;
-  reader.init("../opis_dzialan/opis_dzialan.cmd");
-  if (!reader.execPreprocesor(IStrm4Cmnds))
-  {
-    std::cerr<<"ExecPrep fault"<<std::endl;
-  }
-  if(!reader.ReadFile("../config/config.xml",config))
+  reader.init(argv[1]);
+  if(!reader.ReadFile(argv[2],config))
   {
     std::cerr<<"Error reading xml config"<<std::endl;
     return 1;
   }
-  Scene scene(config);
-  Sender sender(&scene);
-
+  Scene scene (config);
+  Sender sender (&scene);
   if(!sender.OpenConnection())
   {
-    std::cerr<<"Error opening connection"<<std::endl;
+    std::cerr << "Opening Connection fail" <<std::endl;
     return 1;
   }
-  
-std::thread   Thread4Sending(Fun_CommunicationThread,&ClientSender);
-  const char *sConfigCmds =
-"Clear\n"
-"AddObj Name=Podstawa1 RGB=(20,200,200) Scale=(4,2,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,20) Trans_m=(-1,3,0)\n"
-"AddObj Name=Podstawa1.Ramie1 RGB=(200,0,0) Scale=(3,3,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,0) Trans_m=(4,0,0)\n"
-"AddObj Name=Podstawa1.Ramie1.Ramie2 RGB=(100,200,0) Scale=(2,2,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,0) Trans_m=(3,0,0)\n"       
-"AddObj Name=Podstawa2 RGB=(20,200,200) Scale=(4,2,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,0) Trans_m=(-1,-3,0)\n"
-"AddObj Name=Podstawa2.Ramie1 RGB=(200,0,0) Scale=(3,3,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,0) Trans_m=(4,0,0)\n"
-"AddObj Name=Podstawa2.Ramie1.Ramie2 RGB=(100,200,0) Scale=(2,2,1) Shift=(0.5,0,0) RotXYZ_deg=(0,-45,0) Trans_m=(3,0,0)\n";
+  libinterfaces.init(config.lib_vector);
+  std::thread Thread4Sending(&Sender::Watching_and_Sending, &sender);
+  std::vector<std::thread> Threads;
+  std::string key;
+  if (!reader.execPreprocesor(IStrm4Cmnds))
+  {
+    std::cerr<<"ExecPrep fault"<<std::endl;
+  }
+  Interp4Command *cmd;
+  while (IStrm4Cmnds >> key)
+  {
+    cmd = libinterfaces.execCmd(key);
+    if (libinterfaces.isParallel() && cmd != nullptr)
+    {
+      cmd->ReadParams(IStrm4Cmnds);
+      Threads.push_back(std::thread(&Interp4Command::ExecCmd, cmd, &scene));
+    }
+    else if (!libinterfaces.isParallel())
+    {
+      for (int i = 0; i < Threads.size(); ++i)
+      {
+        if (Threads[i].joinable())
+        {
+          Threads[i].join();
+        }
+      }
+      Threads.clear();
+    }
+  }
 
-Set4Libinterfaces libinterfaces;
-libinterfaces.init(config.getLibs());
-libinterfaces.execLib(IStrm4Cmnds);
 
-sender.Send(sConfigCmds);
 sender.Send("Close\n");
 sender.CancelCountinueLooping();
-if(Thread4Sending.joinable()) Thread4Sending.join();
+for (int i = 0; i < Threads.size(); ++i)
+{
+  if (Threads[i].joinable())
+  {
+    Threads[i].join();
+  }
+}
+Thread4Sending.join();
+
 return 0;
 
   // {

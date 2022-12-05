@@ -8,6 +8,8 @@
 #include <string>
 #include "Interp4Command.hh"
 
+#define ROTATE_SPEED 30
+
 /*!
  * \file
  * \brief Definicja klasy Interp4Rotate
@@ -44,7 +46,7 @@ class Interp4Rotate: public Interp4Command {
   /*!
    * \brief Wykonuje polecenie oraz wizualizuje jego realizację
    */
-  virtual bool ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const;
+  virtual bool ExecCmd(Scene *wScn) const;
   /*!
    * \brief Czyta wartości parametrów danego polecenia
    */

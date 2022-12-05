@@ -52,9 +52,19 @@ const char* Interp4Set::GetCmdName() const
 /*!
  *
  */
-bool Interp4Set::ExecCmd(MobileObj *pMobObj, AccessControl *pAccCtrl) const
+bool Interp4Set::ExecCmd(Scene *wScn) const
 {
-  this->PrintCmd();
+  MobileObj *obj_on_scene = wScn->FindMobileObj(this->_ObjName.c_str());
+  Vector3D start_position = obj_on_scene->GetPositoin_m();
+  Vector3D rel_position;
+  rel_position[0] = this->X_Coord;
+  rel_position[1] = this->Y_Coord;
+  rel_position[2] = start_position[2];
+  wScn->LockAccess();
+  obj_on_scene->SetPosition_m(rel_position);
+  obj_on_scene->SetAng_Yaw_deg(this->Z_Coord);
+  wScn->MarkChange();
+  wScn->UnlockAccess();
   return true;
 }
 
