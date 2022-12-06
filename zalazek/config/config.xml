@@ -6,14 +6,25 @@
       <Lib Name="libInterp4Set.so"/>
    </Plugins>
    <Objects>
-     <Cube Name="Sun" Shift="0 0 0" Scale="2 2 2"
-                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 120 0"/>
-     <Cube Name="Sun.1" Shift="0 0 0" Scale="2 2 2"
-                 RotXYZ_deg="45 45 45" Trans_m="0 0 0" RGB="255 255 0 "/>
-     <Cube Name="Mars" Shift="20 0 0" Scale="0.2 0.2 0.2"
+     <Cube Name="Sun" Shift="0 0 0" Scale="3.5 3.5 3.5"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 255 0"/>
+     <Cube Name="Sun.Merkury" Shift="0 0 0" Scale="0.1 0.1 0.1"
                  RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 0 0"/>
-     <Cube Name="Mars.1" Shift="0 0 0" Scale="0.2 0.2 0.2"
-                 RotXYZ_deg="45 45 45" Trans_m="4 0 0" RGB="0 255 0 "/>
+     <Cube Name="Sun.Wenus" Shift="0 0 0" Scale="0.6 0.6 0.6"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 255 255 "/>
+     <Cube Name="Sun.Ziemia" Shift="0 0 0" Scale="0.6 0.6 0.6"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="0 0 255"/>
+     <Cube Name="Sun.Mars" Shift="0 0 0" Scale="0.4 0.4 0.4"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 0 0 "/>
+     <Cube Name="Sun.Jowisz" Shift="0 0 0" Scale="2 2 2"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="0 20 255 "/>
+     <Cube Name="Sun.Saturn" Shift="0 0 0" Scale="1.4 1.4 1.4"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 180 0 "/>         
+     <Cube Name="Sun.Uran" Shift="0 0 0" Scale="1 1 1"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="0 50 255 "/>                                  
+     <Cube Name="Sun.Neptun" Shift="0 0 0" Scale="1 1 1"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="0 150 255 "/>
+
    </Objects>
   </Config>
   

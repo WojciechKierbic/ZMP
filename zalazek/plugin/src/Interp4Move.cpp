@@ -70,7 +70,7 @@ bool Interp4Move::ExecCmd(Scene *wScn) const
   double steps = (int)(t * 50);
   for(int i = 0; i < steps; ++i)
   {
-    tmp_move[0] += (this->_distance_m/steps) * cos(orientation[1]*M_PI / 180) * cos(orientation[3] * M_PI / 180);
+    tmp_move[0] += (this->_distance_m/steps) * cos(orientation[1]*M_PI / 180) * cos(orientation[2] * M_PI / 180);
     tmp_move[1] += (this->_distance_m/steps) * (cos(orientation[0] * M_PI / 180) * sin(orientation[2]* M_PI / 180) + cos(orientation[2] * M_PI / 180)*sin(orientation[1] * M_PI / 180) * sin (orientation[0] * M_PI / 180));
     tmp_move[2] += (this->_distance_m/steps) * (sin(orientation[0] * M_PI / 180) * sin(orientation[2]* M_PI / 180) - cos(orientation[0] * M_PI / 180)*cos(orientation[2] * M_PI / 180) * sin (orientation[1] * M_PI / 180));
     for (int j = 0; j < 3; ++j)

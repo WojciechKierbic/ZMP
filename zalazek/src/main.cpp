@@ -23,22 +23,22 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-  // if (argc < 2)
-  // {
-  //   std::cerr<<"No command file" << std::endl;
-  //   return 1;
-  // }
-  // if (argc < 3)
-  // {
-  //   std::cerr<<"No XML file" << std::endl;
-  //   return 1;
-  // }
+  if (argc < 2)
+  {
+    std::cerr<<"No command file" << std::endl;
+    return 1;
+  }
+  if (argc < 3)
+  {
+    std::cerr<<"No XML file" << std::endl;
+    return 1;
+  }
   Configuration config;
   Reader reader;
   Set4Libinterfaces libinterfaces;
   std::istringstream IStrm4Cmnds;
-  reader.init("opis_dzialan/opis_dzialan.cmd");
-  if(!reader.ReadFile("config/config.xml",config))
+  reader.init(argv[1]);
+  if(!reader.ReadFile(argv[2],config))
   {
     std::cerr<<"Error reading xml config"<<std::endl;
     return 1;
@@ -79,18 +79,6 @@ int main(int argc, char **argv)
       Threads.clear();
     }
   }
-
-
-// sender.Send("Close\n");
-// sender.CancelCountinueLooping();
-// for (int i = 0; i < Threads.size(); ++i)
-// {
-//   if (Threads[i].joinable())
-//   {
-//     Threads[i].join();
-//   }
-// }
-// Thread4Sending.join();
 
 return 0;
 
