@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include "Scene.hh"
 #include "Port.hh"
+#include <string>
 
 class Sender {
   /*!

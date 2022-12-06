@@ -25,7 +25,7 @@ LDFLAGS=-Wall
 interp: obj/main.o obj/Set4Libinterfaces.o obj/Scene.o obj/Libinterface.o obj/Reader.o obj/Sender.o obj/xmlinterp.o
 	g++ ${LDFLAGS} -o interp  obj/main.o obj/Set4Libinterfaces.o obj/Scene.o obj/Libinterface.o obj/Reader.o obj/Sender.o obj/xmlinterp.o  -ldl -lxerces-c -lpthread
 
-obj/main.o: src/main.cpp inc/Interp4Command.hh 
+obj/main.o: src/main.cpp inc/Interp4Command.hh inc/geomVector.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 
 obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh inc/Configuration.hh 

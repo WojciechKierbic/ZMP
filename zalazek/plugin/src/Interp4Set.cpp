@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Interp4Set.hh"
+#include "MobileObj.hh"
 
 using std::cout;
 using std::endl;
@@ -28,7 +29,9 @@ Interp4Command* CreateCmd(void)
  *
  */
 Interp4Set::Interp4Set()
-{}
+{
+  std::cout<<"Creating SET"<<std::endl;
+}
 
 
 /*!

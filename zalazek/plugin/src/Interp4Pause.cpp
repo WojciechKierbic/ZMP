@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Interp4Pause.hh"
-
+#include "MobileObj.hh"
 
 using std::cout;
 using std::endl;
@@ -29,7 +29,9 @@ Interp4Command* CreateCmd(void)
  *
  */
 Interp4Pause::Interp4Pause()
-{}
+{
+  std::cout<<"Creating PAUSE"<<std::endl;
+}
 
 
 /*!

@@ -5,9 +5,11 @@
 # pragma interface
 # pragma implementation
 #endif
-#include <string>
-#include "Interp4Command.hh"
 
+#include "Interp4Command.hh"
+#include "AccessControl.hh"
+#include "Scene.hh"
+#include "MobileObj.hh"
 /*!
  * \file
  * \brief Definicja klasy Interp4Pause

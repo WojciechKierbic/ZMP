@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Interp4Rotate.hh"
-
+#include "MobileObj.hh"
 
 using std::cout;
 using std::endl;
@@ -29,7 +29,9 @@ Interp4Command* CreateCmd(void)
  *
  */
 Interp4Rotate::Interp4Rotate()
-{}
+{
+  std::cout<<"Creating ROTATE"<<std::endl;
+}
 
 
 /*!

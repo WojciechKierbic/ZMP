@@ -1,17 +1,19 @@
   <Config>
    <Plugins>
-      <Lib Name="libInter4Move.so"/>
-      <Lib Name="libInter4Rotate.so"/>
-      <Lib Name="libInter4Pause.so"/>
-      <Lib Name="libInter4Set.so"/>
+      <Lib Name="libInterp4Move.so"/>
+      <Lib Name="libInterp4Rotate.so"/>
+      <Lib Name="libInterp4Pause.so"/>
+      <Lib Name="libInterp4Set.so"/>
    </Plugins>
    <Objects>
-     <Cube Name="Podstawa" Shift="0 -0.5 0" Scale="0.7 0.7 0.2"
-                 RotXYZ_deg="10 0 0" Trans_m="0.1 0 0" RGB="0 0 255"/>
-     <Cube Name="Podstawa.Ramie1" Shift="0 -0.5 0" Scale="0.1 0.1 0.6"
-	                                                 Trans_m="0 0.7 0"/>
-     <Cube Name="Podstawa.Ramie1.Ramie2" Shift="0 -0.5 0"
-	         Scale="0.1 0.1 0.6" Trans_m="0 0.7 0"/>
+     <Cube Name="Sun" Shift="0 0 0" Scale="2 2 2"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 120 0"/>
+     <Cube Name="Sun.1" Shift="0 0 0" Scale="2 2 2"
+                 RotXYZ_deg="45 45 45" Trans_m="0 0 0" RGB="255 255 0 "/>
+     <Cube Name="Mars" Shift="20 0 0" Scale="0.2 0.2 0.2"
+                 RotXYZ_deg="0 0 0" Trans_m="0 0 0" RGB="255 0 0"/>
+     <Cube Name="Mars.1" Shift="0 0 0" Scale="0.2 0.2 0.2"
+                 RotXYZ_deg="45 45 45" Trans_m="4 0 0" RGB="0 255 0 "/>
    </Objects>
   </Config>
   

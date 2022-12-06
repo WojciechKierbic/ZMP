@@ -1,17 +1,5 @@
 #include "Scene.hh"
 
-MobileObj* Scene::FindMobileObj(const char* name)
-{
-    MobileObj* pObj = nullptr;
-    auto it = MobileObjs.find(name);
-    if(it == MobileObjs.end())
-    {
-        std::cout << "Cannot find object " << name << std::endl;
-        return pObj;
-    }
-    pObj =  &(it->second);
-    return pObj;
-}
 
 bool Scene::AddMobileObj(MobileObj *pObj)
 {

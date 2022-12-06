@@ -50,19 +50,28 @@ int Sender::Send(const char* sMesg)
 std::string Sender::AddInstr(MobileObj *obj) const
 {
   std::string instr = "AddObj";
+  Vector3D position = obj->GetPositoin_m();
+  Vector3D scale = obj->getScale();
+  Vector3D translation = obj->getTranslation();
+  Vector3D color = obj->getColor();
   instr += " Name=" + obj->GetName();
-  instr += " Shift=(" + std::to_string(obj->GetPositoin_m()[0]) + ", " + std::to_string(obj->GetPositoin_m()[1]) + ", " + std::to_string(obj->GetPositoin_m()[2]) + ")";
-  instr += " Scale=(" + std::to_string(obj->getScale()[0]) + ", " + std::to_string(obj->getScale()[1]) + ", " + std::to_string(obj->getScale()[2]) + ")";
-  instr += " Trans_m=(" + std::to_string(obj->getTranslation()[0]) + ", " + std::to_string(obj->getTranslation()[1]) + ", " + std::to_string(obj->getTranslation()[2]) + ")";
-  instr += " RGB=(" + std::to_string((int)obj->getColor()[0]) + ", " + std::to_string((int)obj->getColor()[1]) + ", " + std::to_string((int)obj->getColor()[2]) + ")";
+  instr += " Shift=(" + std::to_string(position[0]) + ", " + std::to_string(position[1]) + ", " + std::to_string(position[2]) + ")";
+  instr += " Scale=(" + std::to_string(scale[0]) + ", " + std::to_string(scale[1]) + ", " + std::to_string(scale[2]) + ")";
+  instr += " Trans_m=(" + std::to_string(translation[0]) + ", " + std::to_string(translation[1]) + ", " + std::to_string(translation[2]) + ")";
+  instr += " RGB=(" + std::to_string((int)color[0]) + ", " + std::to_string((int)color[1]) + ", " + std::to_string((int)color[2]) + ")";
   instr += " RotXYZ_deg=(" + std::to_string(obj->GetAng_Roll_deg()) + ", " + std::to_string(obj->GetAng_Pitch_deg()) + ", " + std::to_string(obj->GetAng_Yaw_deg()) + ")\n";
-  std::cout << instr;
+  std::cout << instr <<endl;
+
   return instr;
 }
 
 std::string Sender::UpdateInstr(MobileObj *obj) const
 {
   std::string instr = "UpdateObj";
+  Vector3D position = obj->GetPositoin_m();
+  Vector3D scale = obj->getScale();
+  Vector3D translation = obj->getTranslation();
+  Vector3D color = obj->getColor();
   instr += " Name=" + obj->GetName();
   instr += " Shift=(" + std::to_string(obj->GetPositoin_m()[0]) + ", " + std::to_string(obj->GetPositoin_m()[1]) + ", " + std::to_string(obj->GetPositoin_m()[2]) + ")";
   instr += " Scale=(" + std::to_string(obj->getScale()[0]) + ", " + std::to_string(obj->getScale()[1]) + ", " + std::to_string(obj->getScale()[2]) + ")";

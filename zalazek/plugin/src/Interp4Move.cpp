@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Interp4Move.hh"
+#include "MobileObj.hh"
 
 using std::cout;
 using std::endl;
@@ -58,13 +59,13 @@ bool Interp4Move::ExecCmd(Scene *wScn) const
 {
   MobileObj *obj_on_scene = wScn->FindMobileObj(this->_ObjName.c_str());
   Vector3D start_position;
-  Vector3D orientation;
+  std::vector<double> orientation;
   Vector3D tmp_move;
   Vector3D rel_move;
   start_position = obj_on_scene->GetPositoin_m();
-  orientation[0] = obj_on_scene->GetAng_Roll_deg();
-  orientation[1] = obj_on_scene->GetAng_Pitch_deg();
-  orientation[2] = obj_on_scene->GetAng_Yaw_deg();
+  orientation.push_back(obj_on_scene->GetAng_Roll_deg());
+  orientation.push_back(obj_on_scene->GetAng_Pitch_deg());
+  orientation.push_back(obj_on_scene->GetAng_Yaw_deg());
   double t = this->_distance_m / this->_Speed_mmS;
   double steps = (int)(t * 50);
   for(int i = 0; i < steps; ++i)
@@ -72,7 +73,7 @@ bool Interp4Move::ExecCmd(Scene *wScn) const
     tmp_move[0] += (this->_distance_m/steps) * cos(orientation[1]*M_PI / 180) * cos(orientation[3] * M_PI / 180);
     tmp_move[1] += (this->_distance_m/steps) * (cos(orientation[0] * M_PI / 180) * sin(orientation[2]* M_PI / 180) + cos(orientation[2] * M_PI / 180)*sin(orientation[1] * M_PI / 180) * sin (orientation[0] * M_PI / 180));
     tmp_move[2] += (this->_distance_m/steps) * (sin(orientation[0] * M_PI / 180) * sin(orientation[2]* M_PI / 180) - cos(orientation[0] * M_PI / 180)*cos(orientation[2] * M_PI / 180) * sin (orientation[1] * M_PI / 180));
-    for (int j = 0; j < 3; j++)
+    for (int j = 0; j < 3; ++j)
     {
       rel_move[j] = tmp_move[j] + start_position[j];
     }

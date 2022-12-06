@@ -1,11 +1,7 @@
-#define ROTATE_SPEED 30
-/*
-* Przykładowy zestaw poleceń
-*/
-Set Ob_A 2 0 30 // Polozenie obiektu A
-Set Ob_B 10 10 0 // Polozenie obiektu B
-Rotate 40
-Pause 1000
-Move Ob_A 10 10
-Rotate Ob_B 60
-Move Ob_B 10 20
+BEGIN_PARALLEL_ACTIONS
+Rotate Sun 360
+Rotate Sun.1 -360 
+Rotate Mars 360
+Move Mars 0.2 1
+Rotate Mars.1 -360
+END_PARALLEL_ACTIONS

@@ -6,7 +6,6 @@
 #include <memory>
 #include "MobileObj.hh"
 #include "AccessControl.hh"
-#include "Vector3D.hh"
 #include "Configuration.hh"
 #include <vector>
 #include <sstream>
@@ -22,7 +21,18 @@ std::map <string, MobileObj> MobileObjs;
 
 public:
 Scene(Configuration &config);
-MobileObj* FindMobileObj(const char* ObjName);
+MobileObj* FindMobileObj(const char* ObjName)
+{
+    MobileObj* pObj = nullptr;
+    auto it = MobileObjs.find(ObjName);
+    if(it == MobileObjs.end())
+    {
+        std::cout << "Cannot find object " << ObjName << std::endl;
+        return pObj;
+    }
+    pObj =  &(it->second);
+    return pObj;
+};
 bool AddMobileObj (MobileObj *pObj);
 std::map<string, MobileObj> getMObjects();
 };
